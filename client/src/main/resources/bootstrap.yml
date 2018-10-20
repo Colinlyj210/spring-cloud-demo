@@ -1,0 +1,28 @@
+server:
+  port: 8005
+
+spring:
+  application:
+    name: client
+  cloud:
+    config:
+      label: master
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: config-server
+
+eureka:
+  instance:
+    hostname: localhost
+    ip-address: 127.0.0.1 #将自己的IP地址注册到Eureka服务中
+    instance-id: ${spring.application.name}:${server.port}
+#    lease-expiration-duration-in-seconds: 30 #续约到期时间（默认90秒）
+#    lease-renewal-interval-in-seconds: 10 #心跳时间
+
+  client:
+    registerWithEureka: true #是否将自己注册到Eureka服务中，本身就是无需注册
+    fetchRegistry: true #是否从Eureka中获取注册信息
+    serviceUrl: #Eureka客户端和Eureka服务端交互的地址
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/,http://${eureka.instance.hostname}:8002/eureka/,
+

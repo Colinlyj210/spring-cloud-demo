@@ -1,0 +1,26 @@
+server:
+  port: 8003
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Colinlyj210/spring-cloud-demo-config
+          search-paths: config
+          username: 951263019@qq.com
+          password: Colin580230
+          skip-ssl-validation: true
+          default-label: master
+
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${server.port}
+
+  client:
+    serviceUrl: #Eureka客户端和Eureka服务端交互的地址
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/,http://${eureka.instance.hostname}:8002/eureka/,
+
